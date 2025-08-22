@@ -1,6 +1,6 @@
 # Loan Approval Prediction System
 
-![Loan Approval Predictor](assets/Screenshot 2025-08-22 084742.png)
+![Loan Approval Predictor](assets/screenshot.png)
 
 ## Description
 Developed a machine learning web application to predict loan approval based on applicant financial and personal data. Implemented data preprocessing and trained a Logistic Regression model for accurate classification. The application provides quick insights into loan eligibility, helping users make informed financial decisions.
