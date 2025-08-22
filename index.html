@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Loan Approval Predictor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {font-family: system-ui, Arial; background:#f4f6f9; margin:0; display:flex; min-height:100vh; align-items:center; justify-content:center;}
+    .card {background:#fff; padding:24px; border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,.1); width: 95%; max-width: 440px;}
+    h1 {margin:0 0 12px; color:#2563eb; font-size:22px; text-align:center;}
+    label {display:block; margin:10px 0 6px; font-weight:600;}
+    select,input {width:100%; padding:10px; border:1px solid #ddd; border-radius:10px; font-size:14px;}
+    button {width:100%; margin-top:16px; padding:12px; border:0; border-radius:12px; background:#2563eb; color:#fff; font-weight:700; cursor:pointer;}
+    button:hover {background:#1e4fd6;}
+    .result {margin-top:16px; padding:12px; border-radius:10px; text-align:center; font-weight:700;}
+    .ok {background:#d1fae5; color:#065f46;}
+    .bad {background:#fee2e2; color:#991b1b;}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Loan Approval Predictor</h1>
+
+    <label>Gender</label>
+    <select id="Gender">
+      <option>Male</option><option>Female</option>
+    </select>
+
+    <label>Married</label>
+    <select id="Married">
+      <option>Yes</option><option>No</option>
+    </select>
+
+    <label>Applicant Income</label>
+    <input id="ApplicantIncome" type="number" value="5000">
+
+    <label>Loan Amount</label>
+    <input id="LoanAmount" type="number" value="200">
+
+    <button id="go">Check Approval</button>
+    <div id="out" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    document.getElementById("go").addEventListener("click", async () => {
+      const Gender = document.getElementById("Gender").value;
+      const Married = document.getElementById("Married").value;
+      const ApplicantIncome = document.getElementById("ApplicantIncome").value;
+      const LoanAmount = document.getElementById("LoanAmount").value;
+
+      const url = `/predict?Gender=${encodeURIComponent(Gender)}&Married=${encodeURIComponent(Married)}&ApplicantIncome=${encodeURIComponent(ApplicantIncome)}&LoanAmount=${encodeURIComponent(LoanAmount)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      const out = document.getElementById("out");
+      out.style.display = "block";
+      if (data.loan_status === "Approved") {
+        out.textContent = "✅ Loan Approved";
+        out.className = "result ok";
+      } else if (data.loan_status === "Rejected") {
+        out.textContent = "❌ Loan Rejected";
+        out.className = "result bad";
+      } else {
+        out.textContent = "⚠️ " + (data.error || "Unexpected error");
+        out.className = "result bad";
+      }
+    });
+  </script>
+</body>
+</html>

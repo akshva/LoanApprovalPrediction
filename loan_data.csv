@@ -1,0 +1,7 @@
+Gender,Married,ApplicantIncome,LoanAmount,Loan_Status
+Male,Yes,5000,200,Approved
+Female,No,3000,100,Rejected
+Male,Yes,4000,150,Approved
+Female,Yes,2500,120,Rejected
+Male,No,6000,250,Approved
+Female,No,3500,80,Rejected
